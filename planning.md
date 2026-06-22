@@ -2,86 +2,113 @@
 
 ## Community
 
-I chose the public Reddit community r/4x4. This community discusses
-four-wheel-drive vehicles, off-road driving, tyre pressure, suspension,
-vehicle modifications, recovery equipment, and ownership experiences.
+I chose the public Reddit community r/4x4.
 
-The community is suitable for a text-classification task because the
-quality and structure of its comments vary significantly. Some users
-provide detailed technical explanations or specific real-world
-experiences, while others make unsupported recommendations or post
-short emotional reactions. These differences are meaningful because
-community members often rely on the comments when making vehicle,
-equipment, and safety decisions.
+This community discusses four-wheel-drive vehicles, off-road driving,
+tyre pressure, suspension, recovery equipment, vehicle modifications,
+and ownership experiences.
 
-## Label Taxonomy
+This community is suitable for a classification project because some
+comments provide detailed technical explanations, some give opinions
+without evidence, and others are only short emotional reactions.
 
-### 1. reasoned_contribution
+## Labels
 
-A comment that supports its claim or recommendation using technical
-reasoning, verifiable details, a meaningful comparison, or a specific
-firsthand experience that includes context and an outcome.
+### reasoned_contribution
+
+A comment that supports its opinion or recommendation with technical
+reasoning, specific details, a meaningful comparison, or a clear
+personal experience.
 
 Examples:
 
-- "Lowering tyre pressure from 36 psi to around 24 psi on corrugations
-  increases the contact patch and reduces harshness, but you should
-  reinflate before returning to highway speeds."
+- Lower tyre pressure increases the tyre contact area and can improve
+  traction on sand.
+- A rear differential locker improves traction because it allows both
+  rear wheels to receive power.
 
-- "A rear locker will usually improve low-speed traction more than a
-  suspension lift because it prevents one rear wheel from spinning when
-  it loses contact with the ground."
+### unsupported_take
 
-### 2. unsupported_take
-
-A comment that makes a clear judgment, recommendation, or factual claim
-without enough explanation or evidence to evaluate it.
+A comment that makes a clear opinion, judgment, or recommendation
+without enough explanation or evidence.
 
 Examples:
 
-- "The Hilux is the only ute worth buying. Everything else is rubbish."
+- The Hilux is the best off-road vehicle.
+- Just use 18 psi everywhere.
 
-- "Just run 18 psi everywhere. It will be fine."
+### reaction
 
-### 3. reaction
-
-A comment that mainly expresses emotion, praise, criticism, humour, or
-an immediate response without presenting a meaningful argument or
-recommendation.
+A comment that mainly expresses emotion, humour, praise, or criticism
+without providing a meaningful argument.
 
 Examples:
 
-- "That suspension flex is insane!"
-
-- "Bro really sent it 😂"
+- That build looks amazing!
+- Bro really sent it 😂
 
 ## Hard Edge Cases
 
-A difficult boundary exists between reasoned_contribution and
-unsupported_take when a comment includes a small amount of evidence but
-does not fully explain how the evidence supports the claim.
+The most difficult boundary is between reasoned_contribution and
+unsupported_take.
+
+A comment will only be labeled reasoned_contribution when it explains
+why the claim is reasonable or includes specific context and results.
 
 For example:
 
-"Run 18 psi. I have never had a problem."
+"Use 18 psi. I have never had a problem."
 
-This comment includes a specific number and a personal claim, but it
-does not identify the tyre, vehicle, terrain, speed, or reason that
-18 psi is appropriate. I would label it unsupported_take.
-
-A firsthand experience will only count as reasoned_contribution when it
-includes meaningful context and an observable result. A number or
-technical term alone will not automatically make a comment reasoned.
-
-A second difficult boundary exists between unsupported_take and
-reaction. When a comment contains a clear judgment or recommendation,
-it will be labeled unsupported_take. When it mainly communicates humour
-or emotion without a serious claim, it will be labeled reaction.
+This will be labeled unsupported_take because it does not explain the
+vehicle, tyre type, terrain, speed, or reason for using 18 psi.
 
 ## Data Collection Plan
 
+I will collect at least 210 public posts or comments from r/4x4.
+
+I will aim to collect approximately:
+
+- 70 reasoned_contribution examples
+- 70 unsupported_take examples
+- 70 reaction examples
+
+The dataset will contain the columns text, label, notes, and source_url.
+
+I will personally review every example before including it in the final
+dataset.
+
 ## Evaluation Metrics
+
+I will evaluate the model using:
+
+- Overall accuracy
+- Precision for each label
+- Recall for each label
+- F1 score for each label
+- Macro-average F1 score
+- Confusion matrix
+- Analysis of incorrect predictions
+
+Accuracy alone is not enough because the model may perform well on one
+label but poorly on another.
 
 ## Definition of Success
 
+I will consider the classifier successful if:
+
+- Overall accuracy is at least 70%
+- Macro-average F1 is at least 0.65
+- No individual label has an F1 score below 0.60
+- The fine-tuned model performs better than the zero-shot baseline
+
 ## AI Tool Plan
+
+I will use ChatGPT to test difficult examples that sit between two
+labels.
+
+I may use ChatGPT to suggest preliminary labels, but I will personally
+review and correct every label.
+
+After model training, I will use ChatGPT to identify possible patterns
+in the model's incorrect predictions. I will verify these patterns
+myself before including them in the evaluation report.
