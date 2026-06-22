@@ -1,0 +1,25 @@
+{
+  "fine_tuned_model": {
+    "accuracy": 0.7692,
+    "evaluated_examples": 39,
+    "total_test_examples": 39,
+    "coverage": "39/39",
+    "complete": true
+  },
+  "groq_partial_baseline": {
+    "accuracy": 0.7143,
+    "evaluated_examples": 7,
+    "total_test_examples": 39,
+    "coverage": "7/39",
+    "complete": false
+  },
+  "improvement": null,
+  "comparison_note": "The Groq baseline completed only 7 of 39 test examples because the free-tier token limit was reached. Therefore, the two accuracy values are not directly comparable.",
+  "label_map": {
+    "diagnostic_explanation": 0,
+    "actionable_suggestion": 1,
+    "clarification_request": 2
+  },
+  "model": "distilbert-base-uncased",
+  "baseline_model": "llama-3.3-70b-versatile"
+}
